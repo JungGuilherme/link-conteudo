@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guilherme Jung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e1a2b;
+    --panel:#16283f;
+    --panel-2:#1b3050;
+    --paper:#ece5d6;
+    --paper-dim:#a9a08c;
+    --brass:#c19a5b;
+    --brass-dim:#8a7148;
+    --rule:#2a3c54;
+    --error:#c96a5b;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:
+      radial-gradient(ellipse at top, rgba(193,154,91,0.08), transparent 55%),
+      var(--ink);
+  }
+
+  main{
+    width:100%;
+    max-width:420px;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.8px;
+    color:var(--brass);
+    text-align:center;
+    margin:0 0 10px;
+  }
+
+  h1{
+    font-family:'Source Serif 4', serif;
+    font-weight:600;
+    font-size:26px;
+    text-align:center;
+    margin:0 0 8px;
+    line-height:1.25;
+  }
+
+  .sub{
+    text-align:center;
+    font-size:14px;
+    color:var(--paper-dim);
+    margin:0 0 28px;
+    line-height:1.5;
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:28px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .step{ display:none; }
+  .step.active{
+    display:block;
+    animation:fadeIn 0.35s ease;
+  }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  label{
+    display:block;
+    font-size:12px;
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.4px;
+    color:var(--paper-dim);
+    margin-bottom:8px;
+  }
+
+  input[type="email"],
+  input[type="tel"]{
+    width:100%;
+    background:var(--panel-2);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:13px 14px;
+    font-size:16px;
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    margin-bottom:6px;
+  }
+
+  input::placeholder{ color:#5c6b82; }
+  input:focus{ outline:none; border-color:var(--brass); }
+
+  .hint{
+    font-size:12px;
+    color:var(--paper-dim);
+    margin:0 0 18px;
+    line-height:1.5;
+  }
+
+  .error-msg{
+    font-size:12px;
+    color:var(--error);
+    margin:-4px 0 14px;
+    min-height:14px;
+  }
+
+  button{
+    width:100%;
+    background:var(--brass);
+    color:var(--ink);
+    border:none;
+    border-radius:4px;
+    padding:14px;
+    font-size:15px;
+    font-weight:600;
+    font-family:'IBM Plex Sans', sans-serif;
+    cursor:pointer;
+    transition:background 0.18s ease, opacity 0.18s ease;
+  }
+
+  button:hover{ background:#d1ab6c; }
+  button:disabled{ opacity:0.6; cursor:default; }
+
+  .legal{
+    font-size:11px;
+    color:var(--paper-dim);
+    text-align:center;
+    margin-top:16px;
+    line-height:1.5;
+  }
+
+  .progress{
+    display:flex;
+    gap:6px;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+
+  .dot{
+    width:24px;
+    height:3px;
+    border-radius:2px;
+    background:var(--rule);
+    transition:background 0.25s ease;
+  }
+
+  .dot.done{ background:var(--brass); }
+
+  .icon-circle{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:linear-gradient(155deg, var(--brass), var(--brass-dim));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 18px;
+    font-size:22px;
+  }
+
+  .final-title{
+    font-family:'Source Serif 4', serif;
+    font-size:20px;
+    text-align:center;
+    margin:0 0 8px;
+  }
+
+  .final-sub{
+    text-align:center;
+    font-size:13px;
+    color:var(--paper-dim);
+    margin:0 0 22px;
+    line-height:1.5;
+  }
+
+  a.link-btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    background:var(--brass);
+    color:var(--ink);
+    border-radius:4px;
+    padding:14px;
+    font-size:15px;
+    font-weight:600;
+  }
+
+  a.link-btn:hover{ background:#d1ab6c; }
+  a.link-btn.loading{ opacity:0.6; pointer-events:none; }
+
+  footer{
+    text-align:center;
+    font-size:11px;
+    color:var(--rule);
+    margin-top:28px;
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.3px;
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <p class="eyebrow">GUILHERME JUNG</p>
+  <h1 id="headline">Seu conteúdo está quase liberado</h1>
+  <p class="sub" id="subline">Dois passos rápidos e te entrego o material.</p>
+
+  <div class="card">
+
+    <div class="progress">
+      <div class="dot" id="dot1"></div>
+      <div class="dot" id="dot2"></div>
+    </div>
+
+    <!-- ETAPA 1: E-MAIL -->
+    <div class="step active" id="step-email">
+      <label for="email">Seu melhor e-mail</label>
+      <input type="email" id="email" placeholder="voce@exemplo.com" autocomplete="email">
+      <p class="error-msg" id="email-error"></p>
+      <button id="btn-email">Avançar</button>
+      <p class="legal">Uso seu e-mail só pra te mandar conteúdo relevante. Sem spam, sem repasse a terceiros.</p>
+    </div>
+
+    <!-- ETAPA 2: TELEFONE -->
+    <div class="step" id="step-telefone">
+      <label for="telefone">Seu WhatsApp</label>
+      <input type="tel" id="telefone" placeholder="(51) 99999-9999" autocomplete="tel">
+      <p class="error-msg" id="telefone-error"></p>
+      <button id="btn-telefone">Liberar conteúdo</button>
+      <p class="legal">Pra te avisar quando sair o próximo conteúdo direto por lá.</p>
+    </div>
+
+    <!-- ETAPA 3: LIBERADO -->
+    <div class="step" id="step-final">
+      <div class="icon-circle">✓</div>
+      <p class="final-title">Prontinho!</p>
+      <p class="final-sub" id="final-sub">Seu conteúdo está liberado.</p>
+      <a class="link-btn loading" id="link-final" href="#" target="_blank" rel="noopener">Carregando...</a>
+    </div>
+
+  </div>
+
+  <footer>GUILHERME JUNG · ECONOMISTA</footer>
+
+</main>
+
+<script>
+  // ======= CONFIGURAÇÃO =======
+  const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxW8Rf12l_QB60RVtmp0FyBUuQhXlg3MJW0ejUk7GlJm5nh6_gz-6TRt30mKs0aHrB0bw/exec";
+  const FALLBACK_URL = "https://linktr.ee/SEU_LINK_AQUI"; // usado se o "id" não for encontrado na planilha
+  // =============================
+
+  const params = new URLSearchParams(window.location.search);
+  const contentId = params.get('id') || '';
+
+  let capturedEmail = '';
+  let resolvedUrl = FALLBACK_URL;
+
+  // Busca o link certo assim que a página abre, em paralelo ao preenchimento do form
+  const reportLookup = (async () => {
+    if (!contentId) return;
+    try {
+      const res = await fetch(`${WEBHOOK_URL}?id=${encodeURIComponent(contentId)}`);
+      const data = await res.json();
+      if (data.found) {
+        resolvedUrl = data.url || FALLBACK_URL;
+        if (data.titulo) {
+          document.getElementById('headline').textContent = data.titulo;
+          document.getElementById('subline').textContent = 'Dois passos rápidos e eu te entrego agora.';
+        }
+      }
+    } catch (err) {
+      // silencioso — fica no FALLBACK_URL
+    }
+  })();
+
+  function sendLead(data) {
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: new URLSearchParams(data).toString()
+    }).catch(() => {});
+  }
+
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  document.getElementById('btn-email').addEventListener('click', () => {
+    const emailInput = document.getElementById('email');
+    const email = emailInput.value.trim();
+    const errorEl = document.getElementById('email-error');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      errorEl.textContent = 'Digite um e-mail válido.';
+      emailInput.focus();
+      return;
+    }
+    errorEl.textContent = '';
+    capturedEmail = email;
+
+    sendLead({ email: email, telefone: '', id: contentId, etapa: 'email' });
+
+    document.getElementById('dot1').classList.add('done');
+    showStep('step-telefone');
+  });
+
+  document.getElementById('email').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn-email').click();
+  });
+
+  document.getElementById('btn-telefone').addEventListener('click', async () => {
+    const telInput = document.getElementById('telefone');
+    const telefone = telInput.value.trim();
+    const errorEl = document.getElementById('telefone-error');
+    const digits = telefone.replace(/\D/g, '');
+
+    if (digits.length < 10) {
+      errorEl.textContent = 'Digite um número válido com DDD.';
+      telInput.focus();
+      return;
+    }
+    errorEl.textContent = '';
+
+    sendLead({ email: capturedEmail, telefone: telefone, id: contentId, etapa: 'telefone' });
+
+    document.getElementById('dot2').classList.add('done');
+    showStep('step-final');
+
+    // garante que a busca do link já terminou antes de liberar o botão
+    await reportLookup;
+    const linkEl = document.getElementById('link-final');
+    linkEl.href = resolvedUrl;
+    linkEl.textContent = 'Acessar conteúdo';
+    linkEl.classList.remove('loading');
+  });
+
+  document.getElementById('telefone').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('btn-telefone').click();
+  });
+</script>
+</body>
+</html>
